@@ -7,12 +7,17 @@ public class Main {
         System.out.print("Введите выражение для счета: ");
         str = in.nextLine(); // считывание строки с клавиатуры.
         String[] expression = str.split(" "); // разбиение строки на символы с помощью пробела.
-        if (isCorrectArab(expression)) {
-            getArabResult(expression);
-        } else if (isCorrectRoman(expression)) {
-            getRomanResult(expression);
-        }
+        System.out.println(calc(expression));
         in.close();
+    }
+
+    public static String calc(String[] input){
+        if (isCorrectArab(input)) {
+            return Integer.toString(getArabResult(input));
+        } else if (isCorrectRoman(input)) {
+            return getRomanResult(input);
+        }
+        throw new RuntimeException("throws Exception");
     }
 
     static boolean isCorrectArab(String[] string) {
@@ -80,15 +85,15 @@ public class Main {
     }
 
 
-    static void getArabResult(String[] expression) {
+    static int getArabResult(String[] expression) {
         int first_number, second_number;
         first_number = Integer.parseInt(expression[0]);
         second_number = Integer.parseInt(expression[2]);
         int result = mathAction(first_number, second_number, expression);
-        System.out.println("Результат: " + result);
+        return result;
     }
 
-    static void getRomanResult(String[] expression) {
+    static String getRomanResult(String[] expression) {
         int first_number, second_number;
         first_number = Roman.valueOf(expression[0]).getTranslation();
         second_number = Roman.valueOf(expression[2]).getTranslation();
@@ -96,7 +101,7 @@ public class Main {
             throw new RuntimeException("throws Exception");
         }
         int result = mathAction(first_number, second_number, expression);
-        System.out.println("Результат: " + Roman.getByValue(result));
+        return Roman.getByValue(result).toString();
     }
 }
 
